@@ -1,0 +1,7 @@
+package it.euris.springtest.dao;
+
+public interface UserDao {
+	
+	public int getId(String username);
+
+}

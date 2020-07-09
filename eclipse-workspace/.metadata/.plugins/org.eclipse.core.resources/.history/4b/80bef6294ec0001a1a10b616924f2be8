@@ -1,0 +1,2 @@
+service.jsonPlaceholder.baseUrl=http://jsonplaceholder.typicode.com/
+server.servlet.session.timeout=15m

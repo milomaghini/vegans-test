@@ -1,0 +1,21 @@
+package it.euris.springtest.dao.impl;
+
+import it.euris.springtest.dao.UserDao;
+
+public class UserDaoImpl implements UserDao {
+
+	@Override
+	public int getId(String username) {
+		int res = 0;
+		switch(username) {
+		case "mario":
+			res = 1;
+			break;
+		case "giovanni":
+			res = 2;
+			break;
+		}
+		return res;
+	}
+
+}

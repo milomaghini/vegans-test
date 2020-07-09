@@ -1,0 +1,8 @@
+package it.euris.testspringejb;
+
+import javax.ejb.Remote;
+
+@Remote
+public interface JsonPlaceholderServiceRemote {
+
+}

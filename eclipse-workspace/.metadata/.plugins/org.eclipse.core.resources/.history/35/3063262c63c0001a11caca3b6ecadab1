@@ -1,0 +1,16 @@
+package it.euris.springtest.service;
+
+import java.util.List;
+
+
+import it.euris.springtest.model.Comments;
+import it.euris.springtest.model.Post;
+
+
+public interface JsonPlaceholderService {
+	
+	public Post getPost(int id);
+
+	public List<Comments> getComments(int id);
+	
+}

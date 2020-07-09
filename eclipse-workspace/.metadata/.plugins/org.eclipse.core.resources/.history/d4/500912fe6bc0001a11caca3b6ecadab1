@@ -1,0 +1,58 @@
+package it.euris.testspringejb;
+
+import java.io.IOException;
+
+import javax.ejb.Stateless;
+
+import org.springframework.beans.factory.annotation.Value;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+/**
+ * Session Bean implementation class JsonPlaceholderService
+ */
+@Stateless
+public class JsonPlaceholderService implements JsonPlaceholderServiceRemote {
+    
+	private static final String POST_PATH = "posts/{id}";
+	private static final String COMMENTS_PATH = "posts/{id}/comments";
+	private static final String BASE_URL = "http://jsonplaceholder.typicode.com/";
+	
+	private OkHttpClient client;
+	private ObjectMapper om;
+	
+    public JsonPlaceholderService() {
+    	client = new OkHttpClient();
+    	om = new ObjectMapper();
+    }
+
+	@Override
+	public String getPost(int id) throws IOException {			 
+		Request request = new Request.Builder()
+			      .url(BASE_URL + POST_PATH)
+			      .build();
+		Response response = client.newCall(request).execute();
+		
+		if(response.isSuccessful() && response.body() != null) {
+			String body = response.body().toString();
+			om.readValue(body, valueType)
+		}
+		
+		
+		
+		
+		
+		return ;
+	}
+
+	@Override
+	public String getComments(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

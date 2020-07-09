@@ -1,0 +1,18 @@
+package it.euris.testspringejb;
+
+import javax.ejb.Stateless;
+
+/**
+ * Session Bean implementation class JsonPlaceholderService
+ */
+@Stateless
+public class JsonPlaceholderService implements JsonPlaceholderServiceRemote {
+
+    /**
+     * Default constructor. 
+     */
+    public JsonPlaceholderService() {
+        // TODO Auto-generated constructor stub
+    }
+
+}

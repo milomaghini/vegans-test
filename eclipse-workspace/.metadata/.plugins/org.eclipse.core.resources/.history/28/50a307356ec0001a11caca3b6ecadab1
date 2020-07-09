@@ -1,0 +1,15 @@
+package it.euris.testspringejb;
+
+
+import java.io.IOException;
+
+import javax.ejb.Remote;
+
+@Remote
+public interface JsonPlaceholderServiceRemote {
+	
+	public String getPost(String id) throws IOException;
+
+	public String getComments(String id) throws IOException;
+
+}

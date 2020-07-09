@@ -1,0 +1,14 @@
+package it.euris.testspringejb;
+
+import java.util.List;
+
+import javax.ejb.Remote;
+
+@Remote
+public interface JsonPlaceholderServiceRemote {
+	
+	public String getPost(int id);
+
+	public String getComments(int id);
+
+}

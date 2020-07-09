@@ -1,0 +1,42 @@
+package it.euris.springtest.configuration;
+
+import java.util.Properties;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import it.euris.testspringejb.JsonPlaceholderServiceRemote;
+
+@Configuration
+public class EjbConfiguration {
+	
+	@Bean   
+	public Context context() throws NamingException {
+	    Properties jndiProps = new Properties();
+	    jndiProps.put("java.naming.factory.initial", 
+	      "org.jboss.naming.remote.client.InitialContextFactory");
+	    jndiProps.put("jboss.naming.client.ejb.context", true);
+	    jndiProps.put("java.naming.provider.url", 
+	      "http-remoting://localhost:8081");
+	    return new InitialContext(jndiProps);
+	}
+
+	@Bean
+	public JsonPlaceholderServiceRemote helloStatelessWorld(Context context) 
+	  throws NamingException {
+	 
+	    return (JsonPlaceholderServiceRemote) 
+	      context.lookup(this.getFullName(JsonPlaceholderServiceRemote.class));
+	} 
+	
+	private String getFullName(Class classType) {
+	    String moduleName = "test-spring-ejb/";
+	    String beanName = classType.getSimpleName();
+	    String viewClassName = classType.getName();
+	    return moduleName + beanName + "!" + viewClassName;
+	}
+}

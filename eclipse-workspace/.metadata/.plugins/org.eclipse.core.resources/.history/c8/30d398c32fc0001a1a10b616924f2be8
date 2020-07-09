@@ -1,0 +1,26 @@
+package it.euris.springtest.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestTemplate;
+
+import it.euris.springtest.model.Post;
+import it.euris.springtest.service.JsonPlaceholderService;
+
+public class JsonPlaceholderServiceImpl implements JsonPlaceholderService {
+	
+	private static final String POST_PATH = "posts/{id}";
+	
+	@Value("#{service.jsonPlaceholder.baseUrl}")
+	private String baseUrl;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+
+	@Override
+	public Post getPost(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

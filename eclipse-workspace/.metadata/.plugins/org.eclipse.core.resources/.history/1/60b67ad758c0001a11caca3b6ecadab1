@@ -1,0 +1,36 @@
+package it.euris.springtest.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import it.euris.springtest.model.Post;
+import it.euris.springtest.service.JsonPlaceholderService;
+
+@RestController
+@RequestMapping("/api")
+public class BusinessClassController {
+	
+	@Autowired
+	private JsonPlaceholderService jsonPlaceholderService;
+	
+	@GetMapping("/posts/{id}")
+	public Post getPost(@PathVariable() Integer id) {
+		if(id == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Post id is null");
+		}
+		
+		Post post = jsonPlaceholderService.getPost(id.intValue());
+		
+		if(post == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found with id " + id.intValue());
+		}
+		
+		return post;
+	}
+
+}

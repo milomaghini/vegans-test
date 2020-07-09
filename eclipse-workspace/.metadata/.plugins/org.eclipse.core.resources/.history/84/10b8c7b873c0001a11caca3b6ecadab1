@@ -1,0 +1,67 @@
+package it.euris.testspringejb;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.ejb.Stateless;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import it.euris.testspringejb.model.Comments;
+import it.euris.testspringejb.model.Post;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+/**
+ * Session Bean implementation class JsonPlaceholderService
+ */
+@Stateless
+public class JsonPlaceholderService implements JsonPlaceholderServiceRemote {
+    
+	private static final String POST_PATH = "posts/{id}";
+	private static final String COMMENTS_PATH = "posts/{id}/comments";
+	private static final String BASE_URL = "http://jsonplaceholder.typicode.com/";
+	
+	private OkHttpClient client;
+	private ObjectMapper om;
+	
+    public JsonPlaceholderService() {
+    	client = new OkHttpClient();
+    	om = new ObjectMapper();
+    }
+
+	@Override
+	public String getPost(int id) throws IOException {			
+		String url = BASE_URL + POST_PATH.replace("{id}", String.valueOf(id));
+		Request request = new Request.Builder()
+			      .url(url)
+			      .build();
+		Response response = client.newCall(request).execute();
+		Post res = responseToObj(response);
+		return om.writeValueAsString(res);
+	}
+
+	@Override
+	public String getComments(int id) throws IOException {
+		String url = BASE_URL + COMMENTS_PATH.replace("{id}", String.valueOf(id));
+		Request request = new Request.Builder()
+			      .url(url)
+			      .build();
+		Response response = client.newCall(request).execute();
+		List<Comments> res = responseToObj(response);
+		return om.writeValueAsString(res);
+	}
+	
+	private <T> T responseToObj(Response response) throws IOException {
+		T res = null;
+		if(response.isSuccessful() && response.body() != null && response.code() == 200) {
+			String body = response.body().toString();
+			res = om.readValue(body, new TypeReference<T>() {});
+		}
+		return res;
+	}
+
+}

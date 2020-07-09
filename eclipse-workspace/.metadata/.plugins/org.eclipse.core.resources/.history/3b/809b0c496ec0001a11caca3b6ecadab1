@@ -1,0 +1,46 @@
+package it.euris.springtest.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import it.euris.testspringejb.model.Comments;
+import it.euris.testspringejb.model.Post;
+
+@Service
+public class JsonPlaceholderServiceImpl {
+	
+	private static final String POST_PATH = "posts/{id}";
+	private static final String COMMENTS_PATH = "posts/{id}/comments";
+	
+	@Value("${service.jsonPlaceholder.baseUrl}")
+	private String baseUrl;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+
+	public Post getPost(int id) {
+		String url = this.baseUrl + POST_PATH;
+		ResponseEntity<Post> resultEntity = restTemplate.exchange(url, HttpMethod.GET, null, Post.class, String.valueOf(id));
+		return resultEntity.getBody();
+	}
+	
+	
+	public List<Comments> getComments(int id) {
+		String url = this.baseUrl + COMMENTS_PATH;
+		ResponseEntity<List<Comments>> resultEntity = restTemplate.exchange(
+				url, 
+				HttpMethod.GET, 
+				null, 
+				new ParameterizedTypeReference<List<Comments>>() {}, 
+				String.valueOf(id));
+		return resultEntity.getBody();
+	}
+
+}
