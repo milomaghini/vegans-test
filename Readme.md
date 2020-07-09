@@ -3,6 +3,7 @@ Il front-end è stato implementato utilizzando Angular.
 Tutti i progetti utilizzano dei file di properties per la configurazione.
 
 Utenze (hardcoded):
+
 user -> mario
 password -> password
 
