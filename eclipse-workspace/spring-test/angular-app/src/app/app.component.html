@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  <span>Spring test angular client</span>
+  <span style="flex: 1 1 auto;"></span>
+  <mat-icon aria-hidden="false" aria-label="logout" (click)="logout()">exit_to_app</mat-icon>
+</mat-toolbar>
+<div style="margin: .5em;">
+<button mat-stroked-button color="primary" (click)="caricaPost()">
+  Carica post
+</button>
+<button mat-stroked-button color="primary" (click)="caricaCommenti()">
+  Carica commenti
+</button>
+</div>
+<mat-divider></mat-divider>
+<div *ngIf="post !== null" style="margin: .5em;">
+  <mat-card>
+    <mat-card-title>{{post?.title}}</mat-card-title>
+    <mat-card-subtitle>IdUtente: {{post?.userId}} - Id: {{post?.id}}</mat-card-subtitle>
+    <mat-card-content>{{post?.body}}</mat-card-content>
+  </mat-card>
+</div>
+
+<div *ngIf="commenti !== null" style="margin: .5em;">
+  <div *ngFor="let commento of commenti">
+     <span><b>{{commento.name}} - {{commento.email}}</b></span><br>
+     <small>Id: {{commento.id}} - Post id: {{commento.postId}}</small>
+     <div style="white-space: pre-wrap;">{{commento.body}}</div>
+     <mat-divider></mat-divider>
+  </div>
+</div>
+
+
